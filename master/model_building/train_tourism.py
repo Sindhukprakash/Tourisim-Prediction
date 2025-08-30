@@ -107,6 +107,7 @@ with mlflow.start_run():
 
     # Save model
     model_path = "tourism_model_v1.joblib"
+    model_path = os.path.join("master/model_building", model_path)
     joblib.dump(best_model, model_path)
     mlflow.log_artifact(model_path, artifact_path="model")
     print(f"Model saved at {model_path}")
@@ -115,7 +116,8 @@ with mlflow.start_run():
     repo_id = "Sindhuprakash/Tourism-Prediction-Space"
     hf_token = os.getenv("HF_TOKEN")
 
-    api = HfApi()   
+    api = HfApi() 
+   
     try:
         api.repo_info(repo_id=repo_id, repo_type="model")
         print(f"Repo {repo_id} exists.")
