@@ -108,6 +108,7 @@ with mlflow.start_run():
     # Save model
     model_path = "tourism_model_v1.joblib"
     model_path = os.path.join("master/model_building", model_path)
+    model_path = os.path.join(os.getcwd(),model_path)
     joblib.dump(best_model, model_path)
     mlflow.log_artifact(model_path, artifact_path="model")
     print(f"Model saved at {model_path}")
