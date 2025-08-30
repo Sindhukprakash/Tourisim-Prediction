@@ -10,20 +10,28 @@ from sklearn.preprocessing import LabelEncoder
 # for hugging face space authentication to upload files
 from huggingface_hub import login, HfApi
 
+from dotenv import load_dotenv
+
+# Load the .env file
+load_dotenv()
+
+# Access variables
+hf_token = os.getenv("HF_TOKEN")
+
 # Define constants for the dataset and output paths
-api = HfApi(token=os.getenv("HF_TOKEN"))
-DATASET_PATH = "hf://datasets/sindhuprakash/Tourism-Prediction-Dataset/tourism.csv"
+api = HfApi()
+DATASET_PATH = "hf://datasets/Sindhuprakash/Tourism-Prediction-DataSet/tourism.csv"
 df = pd.read_csv(DATASET_PATH)
 print("Dataset loaded successfully.")
 
 # Drop the unique identifier
-df.drop(columns=['UDI'], inplace=True)
+df.drop(columns=['Unnamed: 0'], inplace=True)
 
 # Encoding the categorical 'Type' column
 label_encoder = LabelEncoder()
-df['Type'] = label_encoder.fit_transform(df['Type'])
+df['TypeofContact'] = label_encoder.fit_transform(df['TypeofContact'])
 
-target_col = 'Failure'
+target_col = 'ProdTaken'
 
 # Split into X (features) and y (target)
 X = df.drop(columns=[target_col])
@@ -46,6 +54,6 @@ for file_path in files:
     api.upload_file(
         path_or_fileobj=file_path,
         path_in_repo=file_path.split("/")[-1],  # just the filename
-        repo_id="Sindhuprakash/Tourism-Prediction",
+        repo_id="sindhuprakash/Tourism-Prediction-DataSet",
         repo_type="dataset",
     )
