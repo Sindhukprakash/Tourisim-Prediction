@@ -15,10 +15,18 @@ from huggingface_hub.utils import RepositoryNotFoundError
 mlflow.set_tracking_uri("http://localhost:5000")
 mlflow.set_experiment("tourism-training-experiment")
 
+from dotenv import load_dotenv
+
+# Load the .env file
+load_dotenv()
+
+# Access variables
+hf_token = os.getenv("HF_TOKEN")
+
 api = HfApi()
 
 # Load dataset
-df = pd.read_csv("/master/data/tourism.csv")
+df = pd.read_csv("hf://datasets/Sindhuprakash/Tourism-Prediction-DataSet/tourism.csv")
 
 # Drop ID columns
 df = df.drop(columns=["Unnamed: 0", "CustomerID"])
@@ -104,7 +112,7 @@ with mlflow.start_run():
     print(f"Model saved at {model_path}")
 
     # Upload to Hugging Face
-    repo_id = "your-username/tourism_model"
+    repo_id = "Sindhuprakash/Tourism-Prediction-Space"
     try:
         api.repo_info(repo_id=repo_id, repo_type="model")
         print(f"Repo {repo_id} exists.")
