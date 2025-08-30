@@ -114,21 +114,29 @@ with mlflow.start_run():
     print(f"Model saved at {model_path}")
 
     # Upload to Hugging Face
-    repo_id = "Sindhuprakash/Tourism-Prediction-Space"
-    hf_token = os.getenv("HF_TOKEN")
+from huggingface_hub import HfFolder
 
-    api = HfApi() 
-   
-    try:
-        api.repo_info(repo_id=repo_id, repo_type="model")
-        print(f"Repo {repo_id} exists.")
-    except RepositoryNotFoundError:
-        create_repo(repo_id=repo_id, repo_type="model", private=False)
-        print(f"Repo {repo_id} created.")
+repo_id = "Sindhuprakash/Tourism-Prediction-Space"
 
-    api.upload_file(
-        path_or_fileobj=model_path,
-        path_in_repo=model_path,
-        repo_id=repo_id,
-        repo_type="model"
-    )
+if not hf_token:
+    raise ValueError("HF_TOKEN not found. Please set it in your .env file.")
+
+# Authenticate with token
+HfFolder.save_token(hf_token)
+
+api = HfApi()
+
+try:
+    api.repo_info(repo_id=repo_id, repo_type="model", token=hf_token)
+    print(f"Repo {repo_id} exists.")
+except RepositoryNotFoundError:
+    create_repo(repo_id=repo_id, repo_type="model", private=False, token=hf_token)
+    print(f"Repo {repo_id} created.")
+
+api.upload_file(
+    path_or_fileobj=model_path,
+    path_in_repo="tourism_model_v1.joblib",  # simpler than full path
+    repo_id=repo_id,
+    repo_type="model",
+    token=hf_token
+)
