@@ -113,6 +113,9 @@ with mlflow.start_run():
 
     # Upload to Hugging Face
     repo_id = "Sindhuprakash/Tourism-Prediction-Space"
+    hf_token = os.getenv("HF_TOKEN")
+
+    api = HfApi()   
     try:
         api.repo_info(repo_id=repo_id, repo_type="model")
         print(f"Repo {repo_id} exists.")
