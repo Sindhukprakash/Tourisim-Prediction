@@ -132,9 +132,9 @@ if hf_token is None:
     raise ValueError("Hugging Face token not found in .env file")
 from huggingface_hub import login
 
-login(token=hf_token)
+#login(token=hf_token)
 
-api = HfApi()
+api = HfApi(token = hf_token)
 
 try:
     api.repo_info(repo_id=repo_id, repo_type="model")
