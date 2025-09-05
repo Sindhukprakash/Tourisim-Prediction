@@ -26,7 +26,7 @@ WORKDIR $HOME/app
 COPY --chown=user . $HOME/app
 
 # Expose Streamlit default port
-EXPOSE 8501
+EXPOSE 7860
 
 # Run Streamlit app
-CMD ["streamlit", "run", "app.py", "--server.port=8501", "--server.address=0.0.0.0", "--server.enableXsrfProtection=false"]
+CMD ["streamlit", "run", "app.py", "--server.port=7860", "--server.address=0.0.0.0", "--server.enableXsrfProtection=false"]
