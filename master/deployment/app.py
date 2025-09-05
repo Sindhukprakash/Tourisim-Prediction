@@ -5,7 +5,7 @@ import joblib
 
 # Download and load the model from Hugging Face Hub
 model_path = hf_hub_download(
-    repo_id="your-username/tourism_model",  # 🔹 replace with your HF repo ID
+    repo_id="Sindhuprakash/Tourism-Prediction-Space", 
     filename="tourism_model_v1.joblib"
 )
 model = joblib.load(model_path)
@@ -13,7 +13,7 @@ model = joblib.load(model_path)
 # Streamlit UI
 st.title("Tourism Package Purchase Prediction App")
 st.write("""
-This app predicts whether a customer is likely to purchase a tourism package 
+This app predicts whether a customer is likely to purchase a tourism package
 based on their demographic, travel, and interaction details.
 Please fill in the information below to get a prediction.
 """)

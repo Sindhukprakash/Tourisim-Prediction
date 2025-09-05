@@ -24,7 +24,7 @@ try:
   api.upload_folder(
     folder_path="master/deployment/",  # the local folder containing your files
     repo_id=repo_id,          # the target repo
-    repo_type="Space",             # dataset, model, or space
+    repo_type="space",             # dataset, model, or space
     path_in_repo="deployment",                          # optional: subfolder path inside the repo
 )
 except Exception as e:
