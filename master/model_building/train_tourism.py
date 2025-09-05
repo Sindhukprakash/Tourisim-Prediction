@@ -114,7 +114,6 @@ with mlflow.start_run():
     print(f"Model saved at {model_path}")
 
     # Upload to Hugging Face
-from huggingface_hub import HfFolder
 
 repo_id = "Sindhuprakash/Tourism-Prediction-Space"
 
@@ -122,7 +121,13 @@ if not hf_token:
     raise ValueError("HF_TOKEN not found. Please set it in your .env file.")
 
 # Authenticate with token
-HfFolder.save_token(hf_token)
+from dotenv import load_dotenv
+
+# Load the .env file
+load_dotenv()
+
+# Access variables
+hf_token = os.getenv("HF_TOKEN")
 
 api = HfApi()
 
