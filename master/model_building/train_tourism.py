@@ -128,20 +128,22 @@ load_dotenv()
 
 # Access variables
 hf_token = os.getenv("HF_TOKEN")
+from huggingface_hub import login
+
+login(token=hf_token)
 
 api = HfApi()
 
 try:
-    api.repo_info(repo_id=repo_id, repo_type="model", token=hf_token)
+    api.repo_info(repo_id=repo_id, repo_type="model")
     print(f"Repo {repo_id} exists.")
 except RepositoryNotFoundError:
-    create_repo(repo_id=repo_id, repo_type="model", private=False, token=hf_token)
+    create_repo(repo_id=repo_id, repo_type="model", private=False)
     print(f"Repo {repo_id} created.")
 
 api.upload_file(
     path_or_fileobj=model_path,
     path_in_repo="tourism_model_v1.joblib",  # simpler than full path
     repo_id=repo_id,
-    repo_type="model",
-    token=hf_token
+    repo_type="model"
 )
