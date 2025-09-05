@@ -128,6 +128,8 @@ load_dotenv()
 
 # Access variables
 hf_token = os.getenv("HF_TOKEN")
+if hf_token is None:
+    raise ValueError("Hugging Face token not found in .env file")
 from huggingface_hub import login
 
 login(token=hf_token)
