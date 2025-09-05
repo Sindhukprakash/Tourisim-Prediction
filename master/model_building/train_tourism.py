@@ -117,8 +117,7 @@ with mlflow.start_run():
 
 repo_id = "Sindhuprakash/Tourism-Prediction-Space"
 
-if not hf_token:
-    raise ValueError("HF_TOKEN not found. Please set it in your .env file.")
+
 
 # Authenticate with token
 from dotenv import load_dotenv
