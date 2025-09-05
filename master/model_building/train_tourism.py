@@ -130,22 +130,26 @@ load_dotenv()
 hf_token = os.getenv("HF_TOKEN")
 if hf_token is None:
     raise ValueError("Hugging Face token not found in .env file")
+else:
+  print("HF_TOKEN loaded:", hf_token[:8], "...")
 from huggingface_hub import login
 
 #login(token=hf_token)
 
 api = HfApi(token = hf_token)
+repo_id = "Sindhuprakash/Tourism-Prediction-Space"
 
+# try:
+#     api.repo_info(repo_id=repo_id, repo_type="model")
+#     print(f"Repo {repo_id} exists.")
+# except RepositoryNotFoundError:
+#     create_repo(repo_id=repo_id, repo_type="model", private=False)
+#     print(f"Repo {repo_id} created.")
 try:
-    api.repo_info(repo_id=repo_id, repo_type="model")
-    print(f"Repo {repo_id} exists.")
-except RepositoryNotFoundError:
-    create_repo(repo_id=repo_id, repo_type="model", private=False)
-    print(f"Repo {repo_id} created.")
-
-api.upload_file(
+  api.upload_file(
     path_or_fileobj=model_path,
     path_in_repo="tourism_model_v1.joblib",  # simpler than full path
     repo_id=repo_id,
-    repo_type="model"
-)
+    repo_type="model")
+except Exception as e:
+  print(f"Error uploading file: {e}")
