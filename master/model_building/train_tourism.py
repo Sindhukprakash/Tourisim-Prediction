@@ -107,10 +107,11 @@ with mlflow.start_run():
 
     # Save model
     model_path = "tourism_model_v1.joblib"
-    model_path = os.path.join("master/model_building", model_path)
-    model_path = os.path.join(os.getcwd(),model_path)
+    print(os.getcwd())
+    #model_path = os.path.join("master/model_building", model_path)
+    model_path = os.path.join(os.getcwd(),"master/model_building/tourism_model_v1.joblib")
     joblib.dump(best_model, model_path)
-    mlflow.log_artifact(model_path, artifact_path="model")
+    #mlflow.log_artifact(model_path, artifact_path="model")
     print(f"Model saved at {model_path}")
 
     # Upload to Hugging Face
